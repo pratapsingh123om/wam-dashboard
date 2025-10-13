@@ -1,0 +1,161 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WAM — Water Monitoring Dashboard</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Chart.js date adapter (time axis) -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+  <!-- SheetJS (XLSX) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">WAM</div>
+        <div class="title" data-i18n="title">Water Quality Monitoring</div>
+      </div>
+
+      <div class="top-controls">
+        <div class="control">
+          <label data-i18n="site_label">Site</label>
+          <select id="siteSelect">
+            <option value="site-1">Site 1</option>
+            <option value="site-2">Site 2</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <label data-i18n="lang_label">Language</label>
+          <select id="langSelect"></select>
+        </div>
+
+        <div class="control file">
+          <label data-i18n="upload_label">Upload CSV / XLSX</label>
+          <input id="fileInput" type="file" accept=".csv,.xlsx,.xls" />
+        </div>
+
+        <div class="control">
+          <button id="downloadCSV" class="btn" data-i18n="btn_download">Download CSV</button>
+          <button id="analyzeBtn" class="btn" title="Analyze selected or DB rows">🔬 Analyze</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- LEFT: Large trend + big number -->
+      <section class="col left">
+        <div class="card stats">
+          <div class="stat-cards">
+            <div class="stat">
+              <div class="stat-title" data-i18n="current_ph">Current pH</div>
+              <div id="statPH" class="stat-value">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title" data-i18n="current_tds">Current TDS</div>
+              <div id="statTDS" class="stat-value">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title" data-i18n="current_turb">Turbidity</div>
+              <div id="statTURB" class="stat-value">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title" data-i18n="current_iron">Iron</div>
+              <div id="statIRON" class="stat-value">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card chart-card">
+          <div class="chart-hero">
+            <div id="mainBigNumber" class="big-kpi">—</div>
+          </div>
+          <canvas id="mainChart"></canvas>
+        </div>
+
+        <div class="card controls">
+          <div class="control-row">
+            <button id="playBtn" class="btn">▶ <span data-i18n="btn_play">Play</span></button>
+            <button id="pauseBtn" class="btn">⏸ <span data-i18n="btn_pause">Pause</span></button>
+            <button id="stepBtn" class="btn">⏭ <span data-i18n="btn_step">Step</span></button>
+
+            <label class="speed">
+              <span data-i18n="label_speed">Speed</span>
+              <input id="speed" type="range" min="200" max="2000" step="100" value="900" />
+            </label>
+          </div>
+
+          <div class="manual-row">
+            <input id="m_ph" placeholder="pH" type="number" step="0.01" />
+            <input id="m_tds" placeholder="TDS" type="number" />
+            <input id="m_turb" placeholder="Turbidity" type="number" />
+            <input id="m_iron" placeholder="Iron" type="number" />
+            <button id="pushBtn" class="btn primary" data-i18n="btn_push">Push</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: small charts, suggestions, table -->
+      <aside class="col right">
+        <div class="card donuts">
+          <div class="donut">
+            <canvas id="donutPH"></canvas>
+            <div class="donut-label" data-i18n="donut_ph">pH Distribution</div>
+          </div>
+          <div class="donut">
+            <canvas id="donutTDS"></canvas>
+            <div class="donut-label" data-i18n="donut_tds">TDS Distribution</div>
+          </div>
+          <div class="donut">
+            <canvas id="donutTURB"></canvas>
+            <div class="donut-label" data-i18n="donut_turb">Turbidity</div>
+          </div>
+        </div>
+
+        <div class="card suggestion">
+          <h3 data-i18n="detected_label">Detected</h3>
+          <div id="detectedText" class="detected">No data yet</div>
+          <h4 data-i18n="treatment_title">Recommended Treatment</h4>
+          <div id="treatmentText" class="treatment">—</div>
+        </div>
+
+        <div class="card table-card">
+          <h4 data-i18n="recent_title">Recent Readings</h4>
+          <div class="table-wrap">
+            <table id="dataTable">
+              <thead><tr><th>ts</th><th>pH</th><th>TDS</th><th>Turb</th><th>Iron</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card thresholds">
+          <h4 data-i18n="thresholds">Thresholds</h4>
+          <label>pH low <input id="th_ph_low" type="number" step="0.1" value="6.5" /></label>
+          <label>pH high <input id="th_ph_high" type="number" step="0.1" value="8.5" /></label>
+          <label>TDS max <input id="th_tds" type="number" step="1" value="500" /></label>
+          <label>Turb max <input id="th_turb" type="number" step="0.1" value="5" /></label>
+          <label>Iron max <input id="th_iron" type="number" step="0.01" value="0.3" /></label>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <div id="alerts" class="alerts">No alerts</div>
+      <div class="credits">WAM • Demo</div>
+    </footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

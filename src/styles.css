@@ -1,0 +1,87 @@
+﻿:root{
+  --bg:#071026;
+  --panel: rgba(255,255,255,0.03);
+  --muted:#9fb0c8;
+  --accent:#00bfa5;
+  --danger:#ff6b6b;
+  --glass: rgba(255,255,255,0.04);
+  --card-radius:14px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,#061028,#08203a);
+  color:#e6f2f7;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+.app{max-width:1280px;margin:18px auto;padding:12px}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;
+  gap:12px;margin-bottom:14px;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{background:linear-gradient(135deg,#00bfa5,#0077cc);width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+.title{font-weight:700;font-size:1.15rem}
+.top-controls{display:flex;gap:10px;align-items:center}
+.control{display:flex;flex-direction:column;font-size:0.85rem;color:var(--muted)}
+.control select,input{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+.control.file input{padding:6px}
+.btn{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));color:inherit;cursor:pointer}
+.btn.primary{background:linear-gradient(90deg,var(--accent),#0077cc);border:none;color:#012;}
+.btn:hover{transform:translateY(-2px);transition:transform .12s ease}
+
+.grid{display:flex;gap:14px}
+.col{display:flex;flex-direction:column;gap:12px}
+.left{flex:2}
+.right{flex:1;min-width:320px}
+
+/* cards */
+.card{background:var(--panel);padding:12px;border-radius:var(--card-radius);box-shadow:0 8px 40px rgba(2,6,23,0.6)}
+.stats .stat-cards{display:flex;gap:8px;flex-wrap:wrap}
+.stat{flex:1;min-width:120px;background:var(--glass);padding:12px;border-radius:12px;text-align:center}
+.stat-title{font-size:0.85rem;color:var(--muted)}
+.stat-value{font-size:1.3rem;font-weight:700;color:var(--accent)}
+
+.chart-card{height:380px;padding:12px;position:relative;overflow:hidden}
+.chart-card canvas{width:100% !important;height:100% !important}
+.chart-hero{position:absolute;left:28px;top:28px;z-index:1;pointer-events:none}
+.big-kpi{font-size:48px;font-weight:800;color:rgba(255,255,255,0.08);letter-spacing:1px}
+
+/* controls */
+.controls .control-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.controls .manual-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.controls input[type="number"]{width:85px;padding:8px;border-radius:8px}
+.controls .speed{display:flex;align-items:center;gap:6px;font-size:0.9rem;color:var(--muted)}
+
+.donuts{display:flex;gap:8px;justify-content:space-between}
+.donut{flex:1;text-align:center}
+.donut canvas{max-width:120px;margin:6px auto;display:block}
+.donut-label{font-size:0.85rem;color:var(--muted);margin-top:4px}
+
+.suggestion .detected{padding:8px;background:rgba(0,0,0,0.25);border-radius:8px;margin-bottom:8px}
+.suggestion .treatment{padding:8px;background:rgba(0,0,0,0.15);border-radius:8px;color:#dbeef0}
+
+/* table */
+.table-wrap{max-height:220px;overflow:auto}
+table{width:100%;border-collapse:collapse;color:#cfeaf1}
+thead th{position:sticky;top:0;background:rgba(0,0,0,0.14);padding:8px;font-weight:600}
+tbody td{padding:6px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:center;font-size:0.9rem}
+
+/* thresholds layout */
+.thresholds label{display:flex;justify-content:space-between;gap:8px;padding:6px 0;font-size:0.9rem;color:var(--muted)}
+.thresholds input{width:110px}
+
+/* footer */
+.footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:10px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005))}
+.alerts{padding:8px;border-radius:8px;background:rgba(255,0,0,0.06);color:#ffd2d2}
+.credits{color:var(--muted);font-size:0.85rem}
+
+/* responsive */
+@media (max-width:1100px){
+  .grid{flex-direction:column}
+  .right{min-width:unset}
+  .donuts{flex-direction:row;justify-content:space-around}
+}

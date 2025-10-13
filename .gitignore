@@ -1,0 +1,16 @@
+﻿node_modules/
+dist/
+.vscode/
+__pycache__/
+venv/
+data.db
+*.pyc
+.env
+
+.env
+
+.env
+
+.env
+
+.env
