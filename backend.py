@@ -17,6 +17,8 @@ from datetime import datetime
 from flask import Flask, request, jsonify, g, send_from_directory, Response, make_response
 from flask_cors import CORS
 import requests
+import traceback
+import logging
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DB_PATH = os.path.join(BASE_DIR, "data.db")
@@ -460,22 +462,87 @@ def local_analysis(rows_list):
 
     return {"type":"local", "generated_text":"\n".join(lines), "stats": stats, "breaches": breaches, "charts": charts}
 
+import traceback
+import logging
+# (ensure logging configured at top of file if not already)
+logging.basicConfig(level=logging.INFO)
+
+ANALYZE_LOG = os.path.join(BASE_DIR, "analyze.log")
+
 @app.route("/api/analyze", methods=["POST"])
 def api_analyze():
+    """
+    Robust analyze endpoint:
+      - If payload.rows present -> local_analysis(rows)
+      - Else -> read last 200 readings from DB and run local_analysis
+      - Logs payload and response to analyze.log and to Flask app logger
+      - Always returns a predictable JSON with 'generated_text', 'stats', 'breaches', 'charts'
+    """
     try:
         payload = request.get_json(force=True) or {}
+    except Exception as e:
+        app.logger.exception("Invalid JSON in analyze request")
+        return jsonify({"error": "Invalid JSON", "detail": str(e)}), 400
+
+    # Log incoming payload (trim long bodies)
+    try:
+        pl_short = json.dumps(payload)[:2000]
+        app.logger.info("[ANALYZE] payload: %s", pl_short)
+        with open(ANALYZE_LOG, "a") as fh:
+            fh.write(f"\n\n--- REQUEST {datetime.utcnow().isoformat()}Z ---\n")
+            fh.write(json.dumps(payload, indent=2) + "\n")
     except Exception:
-        return jsonify({"error":"Invalid JSON"}), 400
-    model = payload.get("model", "")
-    inputs = payload.get("inputs", "")
+        app.logger.exception("Failed to log analyze payload")
+
     rows = payload.get("rows")
-    # If rows provided -> local analysis
-    if rows:
+    try:
+        if rows:
+            # ensure it's a list
+            if not isinstance(rows, list):
+                raise ValueError("rows must be an array")
+            resp = local_analysis(rows)
+            resp_json = resp if isinstance(resp, dict) else {"generated_text": str(resp)}
+            resp_json["type"] = "local"
+        else:
+            # No rows: fetch last N readings from DB and analyze locally
+            db = get_db()
+            cur = db.cursor()
+            limit = int(payload.get("limit", 200))
+            cur.execute("SELECT * FROM readings ORDER BY id DESC LIMIT ?", (limit,))
+            rows_db = [dict(r) for r in cur.fetchall()]
+            # reverse to chronological order
+            rows_db = list(reversed(rows_db))
+            resp = local_analysis(rows_db)
+            resp_json = resp if isinstance(resp, dict) else {"generated_text": str(resp)}
+            resp_json["type"] = "local"
+            resp_json["from_db_rows"] = len(rows_db)
+    except Exception as e:
+        app.logger.exception("Local analysis failed")
+        resp_json = {"error": "Local analysis failed", "detail": str(e)}
+        # log to file
+        with open(ANALYZE_LOG, "a") as fh:
+            fh.write(f"\n\n--- ANALYSIS ERROR {datetime.utcnow().isoformat()}Z ---\n")
+            fh.write(traceback.format_exc() + "\n")
+        return jsonify(resp_json), 500
+
+    # Ensure generated_text present and charts exist
+    if "generated_text" not in resp_json:
+        # create a safe textual summary fallback
         try:
-            return jsonify(local_analysis(rows))
-        except Exception as e:
-            app.logger.exception("Local analysis error")
-            return jsonify({"error":"Local analysis failed", "detail": str(e)}), 500
+            summary = resp_json.get("stats") and json.dumps(resp_json.get("stats"), default=str, indent=2)
+        except Exception:
+            summary = str(resp_json)
+        resp_json["generated_text"] = resp_json.get("generated_text", summary or "Local analysis completed.")
+    # Log the response (trim)
+    try:
+        with open(ANALYZE_LOG, "a") as fh:
+            fh.write(f"\n\n--- RESPONSE {datetime.utcnow().isoformat()}Z ---\n")
+            fh.write(json.dumps(resp_json, indent=2) + "\n")
+        app.logger.info("[ANALYZE] response preview: %s", json.dumps(resp_json)[:2000])
+    except Exception:
+        app.logger.exception("Failed to write analyze log")
+
+    return jsonify(resp_json)
 
     # No rows -> attempt to call Cohere (if key present), else return helpful error
     if not COHERE_API_KEY:
@@ -528,7 +595,7 @@ def serve(path):
 
 @app.route("/health")
 def health():
-    return jsonify({"ok": True, "version": "wam-backend", "time": datetime.utcnow().isoformat() + "Z"})
+    return jsonify({"ok": True, "time": datetime.utcnow().isoformat() + "Z"})
 
 # initialize DB
 with app.app_context():

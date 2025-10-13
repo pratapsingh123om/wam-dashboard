@@ -1,62 +1,118 @@
-﻿/* public/app.js — robust WAM frontend (safe, no duplicate declarations)
-   - Uses window.WAM_API_BASE when provided
-   - Runs after DOMContentLoaded
-   - Single SSE connection with backoff
-   - Single Chart instance updated in-place
-   - Safe fallbacks to avoid ReferenceErrors
+﻿/* public/app.js — WAM frontend (fixed: preserve analysis output)
+   Key fixes:
+    - When analyze returns, put generated_text into #treatmentText and "lock" it.
+    - evaluateLatest() will not overwrite treatmentText while locked.
+    - Small "Clear analysis" button added so user can unlock.
+    - Extra logging of analyze response (page log + console).
 */
 
 (() => {
-  // run after DOM ready
-  document.addEventListener('DOMContentLoaded', () => {
+  // visible on-page logger helper
+  function now(){ return new Date().toISOString().replace('T',' ').replace(/\..+$/,''); }
+  function logToPage(msg, level='info'){
+    try {
+      const container = document.getElementById('wam-log');
+      if(container){
+        const el = document.createElement('div');
+        el.className = 'line ' + level;
+        const ts = document.createElement('span'); ts.className='time'; ts.textContent = '[' + now().split(' ')[1] + '] ';
+        const text = document.createElement('span'); text.textContent = msg;
+        el.appendChild(ts);
+        el.appendChild(text);
+        container.insertBefore(el, container.firstChild);
+        while(container.childNodes.length > 60) container.removeChild(container.lastChild);
+      }
+    } catch(e){}
+    if(level === 'err') console.error('[WAM]', msg); else if(level === 'warn') console.warn('[WAM]', msg); else console.log('[WAM]', msg);
+  }
 
-    // --- config / API helper (single declaration) ---
+  document.addEventListener('DOMContentLoaded', () => {
     const API_BASE = (window.WAM_API_BASE || '').replace(/\/$/, '');
     const API = (path) => (API_BASE ? (API_BASE + path) : path);
 
-    // --- small helpers ---
     const $ = id => document.getElementById(id);
     const q = sel => document.querySelector(sel);
-    const log = (...a) => console.debug('[WAM]', ...a);
+
     function showStatus(msg, type='info'){
-      const alertsBar = $('alerts');
-      if(!alertsBar) return;
-      alertsBar.textContent = msg;
-      alertsBar.style.background = type==='ok' ? 'linear-gradient(90deg, rgba(0,255,170,0.04), rgba(0,255,170,0.01))'
-        : (type==='warn' ? 'linear-gradient(90deg, rgba(255,200,80,0.04), rgba(255,120,0,0.01))' : 'transparent');
+      const b = $('alerts'); if(!b) return;
+      b.textContent = msg;
+      b.style.background = type==='ok'? 'linear-gradient(90deg, rgba(0,255,170,0.04), rgba(0,255,170,0.01))'
+        : (type==='warn'? 'linear-gradient(90deg, rgba(255,200,80,0.04), rgba(255,120,0,0.01))' : 'transparent');
+      logToPage(msg, type);
     }
+
+    // DOM refs (safely)
+    const fileIn = $('fileInput');
+    const downloadBtn = $('downloadCSV');
+    const analyzeBtn = $('analyzeBtn');
+    const playBtn = $('playBtn'), pauseBtn = $('pauseBtn'), stepBtn = $('stepBtn'), pushBtn = $('pushBtn'), speed = $('speed');
+    const statPH = $('statPH'), statTDS = $('statTDS'), statTURB = $('statTURB'), statIRON = $('statIRON');
+    const mainCanvas = $('mainChart');
+    const donutPHCanvas = $('donutPH'), donutTDSCanvas = $('donutTDS'), donutTURBCanvas = $('donutTURB');
+    const tableBody = document.querySelector('#dataTable tbody');
+    const detectedText = $('detectedText'), treatmentText = $('treatmentText'), siteSelect = $('siteSelect');
+
+    // thresholds & manual
+    const thPhLow = $('th_ph_low'), thPhHigh = $('th_ph_high'), thTds = $('th_tds'), thTurb = $('th_turb'), thIron = $('th_iron');
+    const mPh = $('m_ph'), mTds = $('m_tds'), mTurb = $('m_turb'), mIron = $('m_iron');
+
+    // ensure there is an on-page log panel (index.html should contain #wam-log)
+    if(!document.getElementById('wam-log')){
+      const logDiv = document.createElement('div');
+      logDiv.id = 'wam-log';
+      logDiv.style.position = 'fixed';
+      logDiv.style.right = '12px';
+      logDiv.style.bottom = '12px';
+      logDiv.style.width = '360px';
+      logDiv.style.maxHeight = '220px';
+      logDiv.style.overflow = 'auto';
+      logDiv.style.background = 'rgba(0,0,0,0.6)';
+      logDiv.style.color = '#dbeef0';
+      logDiv.style.padding = '8px';
+      logDiv.style.borderRadius = '8px';
+      logDiv.style.fontFamily = 'monospace';
+      logDiv.style.fontSize = '12px';
+      logDiv.style.zIndex = 9999;
+      document.body.appendChild(logDiv);
+    }
+
+    // Add a Clear Analysis button next to treatmentText for unlocking
+    function ensureClearButton(){
+      if(!treatmentText) return;
+      if(document.getElementById('clear-analysis-btn')) return;
+      const btn = document.createElement('button');
+      btn.id = 'clear-analysis-btn';
+      btn.textContent = 'Clear analysis';
+      btn.style.marginTop = '8px';
+      btn.className = 'btn';
+      btn.addEventListener('click', () => {
+        if(treatmentText){
+          treatmentText.dataset.locked = '0';
+          treatmentText.textContent = '—';
+          showStatus('Analysis cleared', 'info');
+        }
+      });
+      treatmentText.parentNode.appendChild(btn);
+    }
+
+    // helpers
     function parseNumber(v){ if(v===null||v===undefined||v==="") return null; const s=String(v).replace(/[^0-9.\-eE]/g,''); const n=Number(s); return Number.isFinite(n)?n:null; }
     function formatTS(ts){ try { return new Date(ts).toLocaleString(); } catch(e) { return String(ts); } }
 
-    // --- DOM refs with safe fallbacks ---
-    const fileIn = $('fileInput') || (() => { const i=document.createElement('input'); i.id='fileInput'; i.type='file'; i.accept='.csv,.xlsx,.xls'; (q('.top-controls')||document.body).appendChild(i); return i; })();
-    const downloadBtn = $('downloadCSV') || (() => { const b=document.createElement('button'); b.id='downloadCSV'; b.className='btn'; b.textContent='Download CSV'; (q('.top-controls')||document.body).appendChild(b); return b; })();
-    const analyzeBtn = $('analyzeBtn') || (() => { const b=document.createElement('button'); b.id='analyzeBtn'; b.className='btn'; b.textContent='Analyze'; (q('.top-controls')||document.body).appendChild(b); return b; })();
-    const playBtn = $('playBtn'), pauseBtn = $('pauseBtn'), stepBtn = $('stepBtn'), pushBtn = $('pushBtn'), speed = $('speed');
-    const statPH = $('statPH'), statTDS = $('statTDS'), statTURB = $('statTURB'), statIRON = $('statIRON');
-    const mainCanvas = $('mainChart') || (() => { const c=document.createElement('canvas'); c.id='mainChart'; (q('.chart-card')||document.body).appendChild(c); return c; })();
-    const donutPHCanvas = $('donutPH') || (() => { const c=document.createElement('canvas'); c.id='donutPH'; (q('.donuts')||document.body).appendChild(c); return c; })();
-    const donutTDSCanvas = $('donutTDS') || (() => { const c=document.createElement('canvas'); c.id='donutTDS'; (q('.donuts')||document.body).appendChild(c); return c; })();
-    const donutTURBCanvas = $('donutTURB') || (() => { const c=document.createElement('canvas'); c.id='donutTURB'; (q('.donuts')||document.body).appendChild(c); return c; })();
-    const tableBody = (document.querySelector('#dataTable tbody')) || (() => { const wrap=q('.table-wrap')||document.body; const t=document.createElement('table'); t.id='dataTable'; t.innerHTML='<thead><tr><th>ts</th><th>pH</th><th>TDS</th><th>Turb</th><th>Iron</th></thead><tbody></tbody>'; wrap.appendChild(t); return t.querySelector('tbody'); })();
-    const detectedText = $('detectedText') || (() => { const d=document.createElement('div'); d.id='detectedText'; (q('.suggestion')||document.body).appendChild(d); return d; })();
-    const treatmentText = $('treatmentText') || (() => { const d=document.createElement('div'); d.id='treatmentText'; (q('.suggestion')||document.body).appendChild(d); return d; })();
-    const siteSelect = $('siteSelect') || (() => { const s=document.createElement('select'); s.id='siteSelect'; s.innerHTML='<option value=\"Well-A\">Well-A</option><option value=\"Well-B\">Well-B</option>'; (q('.top-controls')||document.body).appendChild(s); return s; })();
+    // simple CSV parsing
+    function csvToJson(text){
+      const lines = text.split(/\r?\n/).filter(l=>l.trim()!=='');
+      if(lines.length===0) return [];
+      const headers = lines[0].split(',').map(h=>h.trim());
+      return lines.slice(1).map(line=>{
+        const cols = line.split(',');
+        const obj = {};
+        for(let i=0;i<headers.length;i++) obj[headers[i]] = (cols[i]===undefined)?'':cols[i].trim();
+        return obj;
+      });
+    }
 
-    // thresholds fallback
-    const thPhLow = $('th_ph_low') || (()=>{ const i=document.createElement('input'); i.id='th_ph_low'; i.type='number'; i.step='0.1'; i.value='6.5'; (q('.thresholds')||document.body).appendChild(i); return i; })();
-    const thPhHigh = $('th_ph_high') || (()=>{ const i=document.createElement('input'); i.id='th_ph_high'; i.type='number'; i.step='0.1'; i.value='8.5'; (q('.thresholds')||document.body).appendChild(i); return i; })();
-    const thTds = $('th_tds') || (()=>{ const i=document.createElement('input'); i.id='th_tds'; i.type='number'; i.step='1'; i.value='500'; (q('.thresholds')||document.body).appendChild(i); return i; })();
-    const thTurb = $('th_turb') || (()=>{ const i=document.createElement('input'); i.id='th_turb'; i.type='number'; i.step='0.1'; i.value='5'; (q('.thresholds')||document.body).appendChild(i); return i; })();
-    const thIron = $('th_iron') || (()=>{ const i=document.createElement('input'); i.id='th_iron'; i.type='number'; i.step='0.01'; i.value='0.3'; (q('.thresholds')||document.body).appendChild(i); return i; })();
-
-    // manual input fallbacks
-    const mPh = $('m_ph') || (()=>{ const i=document.createElement('input'); i.id='m_ph'; i.placeholder='pH'; i.type='number'; i.step='0.01'; (q('.controls')||document.body).appendChild(i); return i; })();
-    const mTds = $('m_tds') || (()=>{ const i=document.createElement('input'); i.id='m_tds'; i.placeholder='TDS'; i.type='number'; (q('.controls')||document.body).appendChild(i); return i; })();
-    const mTurb = $('m_turb') || (()=>{ const i=document.createElement('input'); i.id='m_turb'; i.placeholder='Turbidity'; i.type='number'; (q('.controls')||document.body).appendChild(i); return i; })();
-    const mIron = $('m_iron') || (()=>{ const i=document.createElement('input'); i.id='m_iron'; i.placeholder='Iron'; i.type='number'; (q('.controls')||document.body).appendChild(i); return i; })();
-
-    // state
+    // data state
     let rawData = [];
     let chartSeries = { ts: [], ph: [], tds: [], turb: [], iron: [] };
     const MAX_POINTS = 1000;
@@ -66,7 +122,7 @@
     let mainChart=null, donutPH=null, donutTDS=null, donutTURB=null;
     let modelCharts = {};
 
-    // throttled chart update
+    // chart update throttling
     let _chartUpdatePending = false;
     function scheduleChartUpdate(){
       if(_chartUpdatePending) return;
@@ -81,7 +137,7 @@
           mainChart.data.datasets[2].data = chartSeries.turb;
           mainChart.data.datasets[3].data = chartSeries.iron;
           mainChart.update('none');
-        } catch(e) { console.warn('[WAM] chart update failed', e); }
+        } catch(e){ logToPage('chart update failed: '+String(e), 'err'); }
         const last = chartSeries.ts.length - 1;
         statPH && (statPH.textContent = last>=0 && chartSeries.ph[last]!=null ? Number(chartSeries.ph[last]).toFixed(2) : '—');
         statTDS && (statTDS.textContent = last>=0 && chartSeries.tds[last]!=null ? Math.round(chartSeries.tds[last]) : '—');
@@ -90,7 +146,7 @@
       });
     }
 
-    // normalize and ingest
+    // normalize row
     function normalizeRow(r){
       return {
         ts: r.ts || r.time || r.timestamp || r.date || new Date().toISOString(),
@@ -109,24 +165,15 @@
         const norm = rows.map(normalizeRow).filter(r => r.ph!==null || r.tds!==null || r.turb!==null || r.iron!==null);
         rawData = norm.sort((a,b) => new Date(a.ts) - new Date(b.ts));
         resetPlayback();
-      } catch(e){ console.warn('ingestNormalized failed', e); }
+        logToPage(`Imported ${rawData.length} rows`, 'info');
+      } catch(e){ logToPage('ingestNormalized failed: '+String(e), 'err'); }
     }
 
-    // file import (CSV simple)
-    function csvToJson(text){
-      const lines = text.split(/\r?\n/).filter(l=>l.trim()!=='');
-      if(lines.length===0) return [];
-      const headers = lines[0].split(',').map(h=>h.trim());
-      return lines.slice(1).map(line=>{
-        const cols = line.split(',');
-        const obj = {};
-        for(let i=0;i<headers.length;i++) obj[headers[i]] = (cols[i]===undefined)?'':cols[i].trim();
-        return obj;
-      });
-    }
-    function handleFile(file){
-      if(!file) return;
-      const name = file.name.toLowerCase();
+    // file import handler
+    if(fileIn) fileIn.addEventListener('change', e => {
+      const f = e.target.files && e.target.files[0];
+      if(!f) return;
+      const name = f.name.toLowerCase();
       const r = new FileReader();
       r.onload = ev => {
         try {
@@ -139,15 +186,13 @@
             json = XLSX.utils.sheet_to_json(first, { raw:false, defval:'' });
           }
           ingestNormalized(json);
-          showStatus(`Imported ${json.length} rows`, 'ok');
-        } catch(e){ console.error('file parse error', e); showStatus('Import failed', 'warn'); }
+        } catch(e){ logToPage('file parse error: '+String(e), 'err'); showStatus('Import failed', 'warn'); }
       };
-      if(name.endsWith('.csv')) r.readAsText(file); else r.readAsBinaryString(file);
-    }
-    fileIn.addEventListener('change', e => handleFile(e.target.files && e.target.files[0]));
+      if(name.endsWith('.csv')) r.readAsText(f); else r.readAsBinaryString(f);
+    });
 
     // CSV download
-    downloadBtn.addEventListener('click', () => {
+    if(downloadBtn) downloadBtn.addEventListener('click', () => {
       if(!chartSeries.ts.length){ showStatus('No data to download','warn'); return; }
       const rows = chartSeries.ts.map((ts,i)=>({ ts, ph: chartSeries.ph[i], tds: chartSeries.tds[i], turb: chartSeries.turb[i], iron: chartSeries.iron[i] }));
       const header = Object.keys(rows[0]).join(',');
@@ -157,7 +202,7 @@
       showStatus('CSV exported','ok');
     });
 
-    // playback / push
+    // playback / push helpers
     function updateChartSeriesFromRaw(count = rawData.length){
       chartSeries = { ts: [], ph: [], tds: [], turb: [], iron: [] };
       for(let i=0;i<Math.min(count, rawData.length); i++){
@@ -166,6 +211,7 @@
         chartSeries.turb.push(r.turb==null?null:Number(r.turb)); chartSeries.iron.push(r.iron==null?null:Number(r.iron));
       }
     }
+
     function resetPlayback(){
       playIndex = 0;
       updateChartSeriesFromRaw(rawData.length);
@@ -192,13 +238,13 @@
     stepBtn && stepBtn.addEventListener('click', stepPlay);
 
     pushBtn && pushBtn.addEventListener('click', async () => {
-      const row = { ts: new Date().toISOString(), ph: parseNumber(mPh?.value), tds: parseNumber(mTds?.value), turb: parseNumber(mTurb?.value), iron: parseNumber(mIron?.value), site: siteSelect.value || 'manual' };
+      const row = { ts: new Date().toISOString(), ph: parseNumber(mPh?.value), tds: parseNumber(mTds?.value), turb: parseNumber(mTurb?.value), iron: parseNumber(mIron?.value), site: siteSelect?.value || 'manual' };
       rawData.push(row); feedRow(row);
-      try { await fetch(API('/api/sensor'), { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(row) }); showStatus('Pushed to server','ok'); } catch(e){ console.warn('push failed', e); showStatus('Push failed','warn'); }
-      mPh.value=mTds.value=mTurb.value=mIron.value='';
+      try { await fetch(API('/api/sensor'), { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(row) }); showStatus('Pushed to server','ok'); } catch(e){ logToPage('push failed: '+String(e), 'warn'); showStatus('Push failed','warn'); }
+      if(mPh) mPh.value=''; if(mTds) mTds.value=''; if(mTurb) mTurb.value=''; if(mIron) mIron.value='';
     });
 
-    // feedRow
+    // feed row
     function feedRow(r){
       try {
         const ts = (typeof r.ts === 'string') ? r.ts : new Date(r.ts).toISOString();
@@ -212,21 +258,20 @@
         updateDonuts();
         renderTable();
         evaluateLatest();
-      } catch(e){ console.warn('feedRow failed', e); }
+      } catch(e){ logToPage('feedRow failed: '+String(e), 'err'); }
     }
 
-    // charts helpers
-    function destroyChartInstance(c){ try{ if(c) c.destroy(); } catch(e){} }
+    // charts creation
     function createDonut(canvas){
       try {
-        const ctx=canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
         return new Chart(ctx, { type:'doughnut', data:{ labels:['Low','Mid','High'], datasets:[{ data:[0,0,0] }] }, options:{ plugins:{ legend:{ display:false } }, maintainAspectRatio:false } });
-      } catch(e){ console.warn('createDonut failed', e); return null; }
+      } catch(e){ logToPage('createDonut failed: '+String(e), 'warn'); return null; }
     }
 
     function initCharts(){
-      if(typeof Chart === 'undefined'){ console.warn('Chart.js missing — charts disabled'); showStatus('Chart.js not loaded','warn'); return; }
-      if(!mainChart){
+      if(typeof Chart === 'undefined'){ logToPage('Chart.js missing — charts disabled', 'warn'); showStatus('Chart.js not loaded','warn'); return; }
+      if(!mainChart && mainCanvas){
         try {
           const ctx = mainCanvas.getContext('2d');
           mainChart = new Chart(ctx, {
@@ -242,23 +287,23 @@
             },
             options: { animation:false, maintainAspectRatio:false, scales:{ x:{ ticks:{ maxRotation:0 } }, y1:{ position:'left', title:{display:true,text:'pH'} }, y2:{ position:'right', grid:{ drawOnChartArea:false }, title:{display:true,text:'mg/L / NTU'} } }, plugins:{ legend:{ position:'top' } } }
           });
-        } catch(e){ console.warn('initCharts mainChart failed', e); }
+        } catch(e){ logToPage('initCharts mainChart failed: '+String(e), 'err'); }
       }
-      if(!donutPH) donutPH = createDonut(donutPHCanvas);
-      if(!donutTDS) donutTDS = createDonut(donutTDSCanvas);
-      if(!donutTURB) donutTURB = createDonut(donutTURBCanvas);
+      if(donutPHCanvas && !donutPH) donutPH = createDonut(donutPHCanvas);
+      if(donutTDSCanvas && !donutTDS) donutTDS = createDonut(donutTDSCanvas);
+      if(donutTURBCanvas && !donutTURB) donutTURB = createDonut(donutTURBCanvas);
     }
 
     function updateDonuts(){
       if(!donutPH || !donutTDS || !donutTURB) return;
-      const thr = { phLow: parseFloat(thPhLow.value)||6.5, phHigh: parseFloat(thPhHigh.value)||8.5, tds: parseFloat(thTds.value)||500, turb: parseFloat(thTurb.value)||5 };
+      const thr = { phLow: parseFloat(thPhLow?.value)||6.5, phHigh: parseFloat(thPhHigh?.value)||8.5, tds: parseFloat(thTds?.value)||500, turb: parseFloat(thTurb?.value)||5 };
       const bPH=[0,0,0], bTDS=[0,0,0], bTURB=[0,0,0];
       for(let i=0;i<chartSeries.ph.length;i++){ const v=chartSeries.ph[i]; if(v==null) continue; if(v<thr.phLow) bPH[0]++; else if(v>thr.phHigh) bPH[2]++; else bPH[1]++; }
       for(let i=0;i<chartSeries.tds.length;i++){ const v=chartSeries.tds[i]; if(v==null) continue; if(v < thr.tds/2) bTDS[0]++; else if(v > thr.tds) bTDS[2]++; else bTDS[1]++; }
       for(let i=0;i<chartSeries.turb.length;i++){ const v=chartSeries.turb[i]; if(v==null) continue; if(v <= thr.turb) bTURB[1]++; else bTURB[2]++; }
-      try { donutPH.data.datasets[0].data = bPH; donutPH.update('none'); } catch(e){}
-      try { donutTDS.data.datasets[0].data = bTDS; donutTDS.update('none'); } catch(e){}
-      try { donutTURB.data.datasets[0].data = bTURB; donutTURB.update('none'); } catch(e){}
+      try{ donutPH.data.datasets[0].data = bPH; donutPH.update('none'); } catch(e){}
+      try{ donutTDS.data.datasets[0].data = bTDS; donutTDS.update('none'); } catch(e){}
+      try{ donutTURB.data.datasets[0].data = bTURB; donutTURB.update('none'); } catch(e){}
     }
 
     function renderTable(){
@@ -272,13 +317,13 @@
       }
     }
 
-    // detection + prediction (unchanged)
+    // evaluateLatest respects analysis lock
     function evaluateLatest(){
       const n = chartSeries.ts.length;
-      if(n===0){ detectedText && (detectedText.textContent='No data yet'); treatmentText && (treatmentText.textContent='—'); showStatus('No alerts','info'); return; }
+      if(n===0){ detectedText && (detectedText.textContent='No data yet'); if(treatmentText && treatmentText.dataset.locked!=='1') treatmentText.textContent='—'; showStatus('No alerts','info'); return; }
       const last = n-1;
       const ph = chartSeries.ph[last], tds = chartSeries.tds[last], turb = chartSeries.turb[last], iron = chartSeries.iron[last];
-      const thr = { phLow: parseFloat(thPhLow.value)||6.5, phHigh: parseFloat(thPhHigh.value)||8.5, tds: parseFloat(thTds.value)||500, turb: parseFloat(thTurb.value)||5, iron: parseFloat(thIron.value)||0.3 };
+      const thr = { phLow: parseFloat(thPhLow?.value)||6.5, phHigh: parseFloat(thPhHigh?.value)||8.5, tds: parseFloat(thTds?.value)||500, turb: parseFloat(thTurb?.value)||5, iron: parseFloat(thIron?.value)||0.3 };
       const alertsArr=[];
       if(ph!=null && (ph < thr.phLow || ph > thr.phHigh)) alertsArr.push({k:'ph',v:ph});
       if(tds!=null && tds > thr.tds) alertsArr.push({k:'tds',v:tds});
@@ -288,11 +333,20 @@
       const top = alertsArr.length ? alertsArr[0] : null;
       if(top){
         detectedText && (detectedText.textContent = top.k==='ph'?`pH ${Number(top.v).toFixed(2)}`:`${top.k.toUpperCase()} ${Number(top.v).toFixed(2)}`);
-        const treatments = { ph:'Adjust pH: lab-guided dosing.', tds:'Consider RO / ion-exchange.', turb:'Coagulation + filtration.', iron:'Oxidation + filtration.' };
-        treatmentText && (treatmentText.textContent = treatments[top.k] || 'Inspect & lab test.');
+        // DO NOT overwrite treatmentText if locked by analysis
+        if(treatmentText && treatmentText.dataset.locked === '1'){
+          logToPage('Treatment text locked by analysis; not overwriting with heuristic.', 'info');
+        } else {
+          const treatments = { ph:'Adjust pH: lime for low; acid dosing for high (lab guidance).', tds:'Consider RO or ion-exchange for high TDS.', turb:'Investigate source; coagulation + filtration.', iron:'Oxidation + filtration or aeration.' };
+          treatmentText && (treatmentText.textContent = treatments[top.k] || 'Inspect & lab test.');
+        }
         showStatus(`${alertsArr.length} immediate alert(s)`, 'warn');
       } else {
-        detectedText && (detectedText.textContent='No immediate issues'); treatmentText && (treatmentText.textContent='—'); showStatus('All good','ok');
+        detectedText && (detectedText.textContent='No immediate issues');
+        if(!(treatmentText && treatmentText.dataset.locked === '1')) {
+          treatmentText && (treatmentText.textContent='—');
+        }
+        showStatus('All good','ok');
       }
     }
 
@@ -304,13 +358,13 @@
       if(es) return;
       try {
         const url = API('/stream');
+        logToPage('SSE -> ' + url, 'info');
         es = new EventSource(url);
         sseClosedByUser = false;
-        es.onopen = () => { log('SSE open'); reconnectDelay = 1000; showStatus('SSE connected','ok'); };
+        es.onopen = () => { logToPage('SSE open', 'info'); reconnectDelay = 1000; showStatus('SSE connected','ok'); };
         es.onerror = (e) => {
-          console.warn('[WAM] SSE error', e);
-          showStatus('SSE error — reconnecting', 'warn');
-          try { es.close(); } catch(e){ }
+          logToPage('SSE error, reconnecting', 'warn'); showStatus('SSE error — reconnecting', 'warn');
+          try { es.close(); } catch(e){}
           es = null;
           if(!sseClosedByUser) setTimeout(()=> { reconnectDelay = Math.min(reconnectDelay * 1.8, 30000); startSSE(); }, reconnectDelay);
         };
@@ -320,57 +374,58 @@
             if(obj.type === 'reading' && obj.data) feedRow(obj.data);
             else if(obj.type === 'alert' && obj.data) showStatus('Alert: '+obj.data.message,'warn');
             else if(obj.type === 'thresholds' && obj.data) showStatus('Thresholds updated','info');
-          } catch(e){ console.warn('SSE parse', e); }
+          } catch(e){ logToPage('SSE parse error: '+String(e), 'warn'); }
         };
         window.addEventListener('beforeunload', () => { try { sseClosedByUser = true; es && es.close(); } catch(e){} });
-      } catch(e){
-        console.warn('startSSE failed', e);
-        es = null;
-        setTimeout(startSSE, reconnectDelay);
-      }
+      } catch(e){ logToPage('startSSE failed: '+String(e), 'err'); es=null; setTimeout(startSSE, reconnectDelay); }
     }
-    function stopSSE(){
-      sseClosedByUser = true;
-      try { if(es) es.close(); } catch(e){}
-      es = null;
-    }
+    function stopSSE(){ sseClosedByUser=true; try{ es && es.close(); } catch(e){} es=null; }
 
-    // fetch initial rows from backend
+    // fetch initial rows
     async function fetchInitial(){
       try {
         const r = await fetch(API('/api/readings?limit=500'));
-        if(!r.ok){ console.warn('init fetch failed', r.status); showStatus('Could not load readings','warn'); return; }
+        if(!r.ok){ logToPage('/api/readings failed: '+r.status, 'warn'); showStatus('Could not load readings','warn'); return; }
         const rows = await r.json();
         rawData = rows.map(normalizeRow);
         resetPlayback();
         showStatus('Loaded readings from server', 'ok');
-      } catch(e) { console.warn('fetchInitial error', e); showStatus('Server unreachable','warn'); }
+      } catch(e){ logToPage('fetchInitial error: '+String(e), 'err'); showStatus('Server unreachable','warn'); }
     }
 
-    // analyze (local via backend -> /api/analyze)
+    // analyze (preserve text)
     let analyzeInFlight = false;
-    analyzeBtn.addEventListener('click', async () => {
+    if(analyzeBtn) analyzeBtn.addEventListener('click', async () => {
       if(analyzeInFlight) return;
       analyzeInFlight = true;
       analyzeBtn.disabled = true;
       try {
         const N = 200;
-        const rows = chartSeries.ts.length ? chartSeries.ts.map((ts,i)=>({ ts, ph: chartSeries.ph[i], tds: chartSeries.tds[i], turb: chartSeries.turb[i], iron: chartSeries.iron[i], site: siteSelect.value })) : [];
+        const rows = chartSeries.ts.length ? chartSeries.ts.map((ts,i)=>({ ts, ph: chartSeries.ph[i], tds: chartSeries.tds[i], turb: chartSeries.turb[i], iron: chartSeries.iron[i], site: siteSelect?.value })) : [];
         const payload = rows.length ? { rows: rows.slice(-N) } : { inputs: 'Summarize recent readings and suggest treatments.' };
-        showStatus('Analyzing...', 'info'); log('[WAM] ANALYZE payload', payload);
+        showStatus('Analyzing...', 'info');
+        logToPage('[ANALYZE] sending payload (rows=' + (rows.length) + ')', 'info');
         const r = await fetch(API('/api/analyze'), { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload) });
         const text = await r.text();
+        logToPage('[ANALYZE] raw response: ' + (text.length>1000?text.slice(0,1000)+'...':text), 'info');
         let json = null;
         try { json = JSON.parse(text); } catch(e) { json = null; }
-        log('[WAM] ANALYZE status', r.status, json || text);
         if(!r.ok){
           const errMsg = json && (json.error || json.detail) ? (json.error || json.detail) : (text || `HTTP ${r.status}`);
           showStatus('Analyze failed: ' + errMsg, 'warn');
           treatmentText && (treatmentText.textContent = errMsg);
+          logToPage('[ANALYZE] failed: ' + errMsg, 'warn');
           return;
         }
         if(json){
-          treatmentText.textContent = json.generated_text || JSON.stringify(json, null, 2);
+          // use generated_text if present, else stringify entire json
+          const resultText = json.generated_text || json.generatedText || json.text || JSON.stringify(json, null, 2);
+          if(treatmentText){
+            treatmentText.textContent = resultText;
+            treatmentText.dataset.locked = '1'; // LOCK so heuristics won't overwrite it
+            ensureClearButton();
+          }
+          // also apply charts if provided
           if(Array.isArray(json.charts) && json.charts.length){
             const mainSpec = json.charts.find(c => c.id === 'main') || json.charts[0];
             if(mainSpec){
@@ -382,18 +437,21 @@
                 chartSeries.turb = ds[2] && Array.isArray(ds[2].data) ? ds[2].data.slice() : chartSeries.turb;
                 chartSeries.iron = ds[3] && Array.isArray(ds[3].data) ? ds[3].data.slice() : chartSeries.iron;
                 scheduleChartUpdate();
-              } catch(e){ console.warn('apply mainSpec failed', e); }
+              } catch(e){ logToPage('apply mainSpec failed: '+String(e), 'warn'); }
             }
-            // small model charts render
-            renderModelCharts(json.charts);
+            // render model charts if any
+            try { renderModelCharts(json.charts); } catch(e){ logToPage('renderModelCharts failed: '+String(e), 'warn'); }
           }
           showStatus('Analysis returned', 'ok');
         } else {
-          treatmentText.textContent = text;
+          // plain text response
+          treatmentText && (treatmentText.textContent = text);
+          treatmentText && (treatmentText.dataset.locked = '1');
+          ensureClearButton();
           showStatus('Analysis returned', 'ok');
         }
       } catch(e){
-        console.error('analyze request failed', e);
+        logToPage('analyze request failed: '+String(e), 'err');
         showStatus('Analyze request error (console)', 'warn');
         treatmentText && (treatmentText.textContent = String(e));
       } finally {
@@ -402,7 +460,7 @@
       }
     });
 
-    // renderModelCharts (safe)
+    // render model charts (safe)
     function renderModelCharts(chartsSpec){
       if(!Array.isArray(chartsSpec) || chartsSpec.length===0) return;
       let container = q('#model-charts');
@@ -419,13 +477,11 @@
           const datasets = (spec.datasets || []).map(ds => ({ label: ds.label || 'series', data: ds.data || [], spanGaps:true, tension:0.25 }));
           const ch = new Chart(ctx, { type: spec.type || 'line', data:{ labels: spec.labels || [], datasets }, options:{ maintainAspectRatio:false, animation:false } });
           modelCharts[`m${idx}`] = ch;
-        } catch(e){
-          console.error('renderModelCharts error', e);
-        }
+        } catch(e){ logToPage('renderModelCharts error: '+String(e), 'warn'); }
       });
     }
 
-    // startup sequence
+    // startup
     function startup(){
       if(!rawData.length){
         const now = Date.now();
@@ -436,17 +492,25 @@
       scheduleChartUpdate();
       updateDonuts();
       renderTable();
-      // start SSE and load initial readings
       startSSE();
       fetchInitial();
-      log('startup done');
+      logToPage('startup done', 'info');
     }
 
-    // expose minimal debug & control
+    // expose for debug
     window.__WAM = { rawData, chartSeries, feedRow, resetPlayback, startPlay, stopPlay, startSSE, stopSSE };
 
-    // call startup once
-    try { startup(); } catch(e){ console.error('startup failed', e); showStatus('Startup error (console)', 'warn'); }
+    // safe function definitions used earlier
+    function updateChartSeriesFromRaw(count = rawData.length){
+      chartSeries = { ts: [], ph: [], tds: [], turb: [], iron: [] };
+      for(let i=0;i<Math.min(count, rawData.length); i++){
+        const r = rawData[i];
+        chartSeries.ts.push(r.ts); chartSeries.ph.push(r.ph==null?null:Number(r.ph)); chartSeries.tds.push(r.tds==null?null:Number(r.tds));
+        chartSeries.turb.push(r.turb==null?null:Number(r.turb)); chartSeries.iron.push(r.iron==null?null:Number(r.iron));
+      }
+    }
 
+    // start
+    try { startup(); } catch(e){ logToPage('startup failed: '+String(e),'err'); showStatus('Startup error','warn'); }
   }); // DOMContentLoaded
-})();
+})(); // IIFE

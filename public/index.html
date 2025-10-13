@@ -5,92 +5,81 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>WAM — Water Monitoring Dashboard</title>
 
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
 
-  <!-- Chart.js (single include) -->
+  <!-- Chart.js: single include (important: do NOT duplicate) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-  <!-- SheetJS (XLSX) — optional -->
+  <!-- SheetJS (optional for .xlsx imports) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* small visible debug log area so you see errors even if console is empty */
+    #wam-log {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      width: 360px;
+      max-height: 220px;
+      overflow:auto;
+      background: rgba(0,0,0,0.6);
+      color: #dbeef0;
+      padding:8px;
+      border-radius:8px;
+      font-family: monospace;
+      font-size:12px;
+      z-index:9999;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    #wam-log .line{ margin-bottom:6px; }
+    #wam-log .err{ color:#ffb2b2; }
+    #wam-log .info{ color:#b9f1d2; }
+    #wam-log .warn{ color:#ffd59b; }
+    #wam-log .time{ color:#93c0d8; margin-right:6px; }
+  </style>
 </head>
 <body>
   <div class="app">
     <header class="topbar">
-      <div class="brand">
-        <div class="logo">WAM</div>
-        <div class="title" data-i18n="title">Water Quality Monitoring</div>
-      </div>
-
+      <div class="brand"><div class="logo">WAM</div><div class="title">Water Quality Monitoring</div></div>
       <div class="top-controls">
         <div class="control">
-          <label data-i18n="site_label">Site</label>
-          <select id="siteSelect">
-            <option value="site-1">Site 1</option>
-            <option value="site-2">Site 2</option>
-          </select>
+          <label>Site</label>
+          <select id="siteSelect"><option value="site-1">Site 1</option><option value="site-2">Site 2</option></select>
         </div>
-
-        <div class="control">
-          <label data-i18n="lang_label">Language</label>
-          <select id="langSelect"></select>
-        </div>
-
         <div class="control file">
-          <label data-i18n="upload_label">Upload CSV / XLSX</label>
+          <label>Upload CSV / XLSX</label>
           <input id="fileInput" type="file" accept=".csv,.xlsx,.xls" />
         </div>
-
         <div class="control">
-          <button id="downloadCSV" class="btn" data-i18n="btn_download">Download CSV</button>
-          <button id="analyzeBtn" class="btn" title="Analyze selected or DB rows">🔬 Analyze</button>
+          <button id="downloadCSV" class="btn">Download CSV</button>
+          <button id="analyzeBtn" class="btn">🔬 Analyze</button>
         </div>
       </div>
     </header>
 
     <main class="grid">
-      <!-- LEFT: Large trend + big number -->
       <section class="col left">
         <div class="card stats">
           <div class="stat-cards">
-            <div class="stat">
-              <div class="stat-title" data-i18n="current_ph">Current pH</div>
-              <div id="statPH" class="stat-value">—</div>
-            </div>
-            <div class="stat">
-              <div class="stat-title" data-i18n="current_tds">Current TDS</div>
-              <div id="statTDS" class="stat-value">—</div>
-            </div>
-            <div class="stat">
-              <div class="stat-title" data-i18n="current_turb">Turbidity</div>
-              <div id="statTURB" class="stat-value">—</div>
-            </div>
-            <div class="stat">
-              <div class="stat-title" data-i18n="current_iron">Iron</div>
-              <div id="statIRON" class="stat-value">—</div>
-            </div>
+            <div class="stat"><div class="stat-title">Current pH</div><div id="statPH" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-title">Current TDS</div><div id="statTDS" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-title">Turbidity</div><div id="statTURB" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-title">Iron</div><div id="statIRON" class="stat-value">—</div></div>
           </div>
         </div>
 
         <div class="card chart-card">
-          <div class="chart-hero">
-            <div id="mainBigNumber" class="big-kpi">—</div>
-          </div>
+          <div class="chart-hero"><div id="mainBigNumber" class="big-kpi">—</div></div>
           <canvas id="mainChart"></canvas>
         </div>
 
         <div class="card controls">
           <div class="control-row">
-            <button id="playBtn" class="btn">▶ <span data-i18n="btn_play">Play</span></button>
-            <button id="pauseBtn" class="btn">⏸ <span data-i18n="btn_pause">Pause</span></button>
-            <button id="stepBtn" class="btn">⏭ <span data-i18n="btn_step">Step</span></button>
-
-            <label class="speed">
-              <span data-i18n="label_speed">Speed</span>
-              <input id="speed" type="range" min="200" max="2000" step="100" value="900" />
-            </label>
+            <button id="playBtn" class="btn">▶ Play</button>
+            <button id="pauseBtn" class="btn">⏸ Pause</button>
+            <button id="stepBtn" class="btn">⏭ Step</button>
+            <label class="speed">Speed <input id="speed" type="range" min="200" max="2000" step="100" value="900" /></label>
           </div>
 
           <div class="manual-row">
@@ -98,47 +87,34 @@
             <input id="m_tds" placeholder="TDS" type="number" />
             <input id="m_turb" placeholder="Turbidity" type="number" />
             <input id="m_iron" placeholder="Iron" type="number" />
-            <button id="pushBtn" class="btn primary" data-i18n="btn_push">Push</button>
+            <button id="pushBtn" class="btn primary">Push</button>
           </div>
         </div>
       </section>
 
-      <!-- RIGHT: small charts, suggestions, table -->
       <aside class="col right">
         <div class="card donuts">
-          <div class="donut">
-            <canvas id="donutPH"></canvas>
-            <div class="donut-label" data-i18n="donut_ph">pH Distribution</div>
-          </div>
-          <div class="donut">
-            <canvas id="donutTDS"></canvas>
-            <div class="donut-label" data-i18n="donut_tds">TDS Distribution</div>
-          </div>
-          <div class="donut">
-            <canvas id="donutTURB"></canvas>
-            <div class="donut-label" data-i18n="donut_turb">Turbidity</div>
-          </div>
+          <div class="donut"><canvas id="donutPH"></canvas><div class="donut-label">pH Distribution</div></div>
+          <div class="donut"><canvas id="donutTDS"></canvas><div class="donut-label">TDS Distribution</div></div>
+          <div class="donut"><canvas id="donutTURB"></canvas><div class="donut-label">Turbidity</div></div>
         </div>
 
         <div class="card suggestion">
-          <h3 data-i18n="detected_label">Detected</h3>
+          <h3>Detected</h3>
           <div id="detectedText" class="detected">No data yet</div>
-          <h4 data-i18n="treatment_title">Recommended Treatment</h4>
+          <h4>Recommended Treatment</h4>
           <div id="treatmentText" class="treatment">—</div>
         </div>
 
         <div class="card table-card">
-          <h4 data-i18n="recent_title">Recent Readings</h4>
+          <h4>Recent Readings</h4>
           <div class="table-wrap">
-            <table id="dataTable">
-              <thead><tr><th>ts</th><th>pH</th><th>TDS</th><th>Turb</th><th>Iron</th></tr></thead>
-              <tbody></tbody>
-            </table>
+            <table id="dataTable"><thead><tr><th>ts</th><th>pH</th><th>TDS</th><th>Turb</th><th>Iron</th></tr></thead><tbody></tbody></table>
           </div>
         </div>
 
         <div class="card thresholds">
-          <h4 data-i18n="thresholds">Thresholds</h4>
+          <h4>Thresholds</h4>
           <label>pH low <input id="th_ph_low" type="number" step="0.1" value="6.5" /></label>
           <label>pH high <input id="th_ph_high" type="number" step="0.1" value="8.5" /></label>
           <label>TDS max <input id="th_tds" type="number" step="1" value="500" /></label>
@@ -154,12 +130,13 @@
     </footer>
   </div>
 
-  <!-- Set backend base URL here if frontend served separately (Vite). -->
-  <script>
-    // default: backend at http://localhost:5001
-    window.WAM_API_BASE = window.WAM_API_BASE || "http://localhost:5001";
-  </script>
+  <!-- Default backend base (adjust if your backend runs elsewhere) -->
+  <script>window.WAM_API_BASE = window.WAM_API_BASE || "http://localhost:5001";</script>
 
+  <!-- app -->
   <script src="/app.js"></script>
+
+  <!-- visible log panel -->
+  <div id="wam-log" aria-hidden="false"></div>
 </body>
 </html>
