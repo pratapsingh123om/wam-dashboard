@@ -8,13 +8,11 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Chart.js -->
+  <!-- Chart.js (single include) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <!-- Chart.js date adapter (time axis) -->
- 
-  <!-- SheetJS (XLSX) -->
+
+  <!-- SheetJS (XLSX) — optional -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 
   <link rel="stylesheet" href="/styles.css" />
 </head>
@@ -155,6 +153,12 @@
       <div class="credits">WAM • Demo</div>
     </footer>
   </div>
+
+  <!-- Set backend base URL here if frontend served separately (Vite). -->
+  <script>
+    // default: backend at http://localhost:5001
+    window.WAM_API_BASE = window.WAM_API_BASE || "http://localhost:5001";
+  </script>
 
   <script src="/app.js"></script>
 </body>
