@@ -1,0 +1,4034 @@
+
+
+--- REQUEST 2025-10-13T07:54:24.027119Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:54:24.057749Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:54:39.950846Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:54:39.959608Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:55:50.257791Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:55:50.264382Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:55:51.418751Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:55:51.423362Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:55:52.424407Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:55:52.426209Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:55:53.495634Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:55:53.498718Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:55:54.661305Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:55:54.664490Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:57:54.854474Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:57:54.861681Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T07:57:56.719132Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T07:57:56.721342Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-13T08:00:46.321928Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-13T08:00:46.324050Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T19:06:33.769307Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T19:06:33.779072Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T19:06:41.038653Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T19:06:41.043032Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T19:18:36.797131Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T19:18:36.801147Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T19:18:49.908909Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-01T00:00:00Z",
+      "ph": 7.1,
+      "tds": 320,
+      "turb": 1.2,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T01:00:00Z",
+      "ph": 7,
+      "tds": 325,
+      "turb": 1,
+      "iron": 0.05,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-01T02:00:00Z",
+      "ph": 6.8,
+      "tds": 480,
+      "turb": 3.5,
+      "iron": 0.12,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T19:18:49.913158Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.97, min=6.8, max=7.1\n- TDS: 3 readings, avg=375, min=320.0, max=480.0\n- TURB: 3 readings, avg=1.9, min=1.0, max=3.5\n- IRON: 3 readings, avg=0.0733, min=0.05, max=0.12\n\nNo threshold breaches detected in provided rows.\n\nSuggested actions (heuristic):\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.966666666666666,
+      "min": 6.8,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 3,
+      "avg": 375.0,
+      "min": 320.0,
+      "max": 480.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 1.9000000000000001,
+      "min": 1.0,
+      "max": 3.5
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.07333333333333333,
+      "min": 0.05,
+      "max": 0.12
+    }
+  },
+  "breaches": [],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-01T00:00:00Z",
+        "2025-10-01T01:00:00Z",
+        "2025-10-01T02:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            320.0,
+            325.0,
+            480.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            1.2,
+            1.0,
+            3.5
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.12
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T19:19:39.163889Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T19:19:39.171886Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T19:34:08.434663Z ---
+{
+  "rows": []
+}
+
+
+--- RESPONSE 2025-10-30T19:34:08.436909Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 35 readings, avg=6.67, min=5.0, max=7.1\n- TDS: 35 readings, avg=505, min=55.0, max=777.0\n- TURB: 35 readings, avg=4.54, min=2.3, max=8.0\n- IRON: 35 readings, avg=0.196, min=0.05, max=0.5\n\nAlerts detected: 22 readings breach thresholds:\n  \u2022 Site Well-A @ None: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site Well-A @ None: TDS high (510.0 > 500)\n  \u2022 Site Well-A @ None: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site Well-A @ None: TDS high (510.0 > 500)\n  \u2022 Site Well-A @ None: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site Well-A @ None: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 35,
+      "avg": 6.665714285714286,
+      "min": 5.0,
+      "max": 7.1
+    },
+    "tds": {
+      "count": 35,
+      "avg": 504.9142857142857,
+      "min": 55.0,
+      "max": 777.0
+    },
+    "turb": {
+      "count": 35,
+      "avg": 4.54,
+      "min": 2.3,
+      "max": 8.0
+    },
+    "iron": {
+      "count": 35,
+      "avg": 0.1957142857142857,
+      "min": 0.05,
+      "max": 0.5
+    }
+  },
+  "breaches": [
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 4,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 6,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 7,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 9,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 10,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 12,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 13,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 15,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 16,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 18,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 19,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 21,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 22,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 24,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 25,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 27,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 28,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 30,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "id": 31,
+        "ts": null,
+        "ph": 6.4,
+        "tds": 580.0,
+        "turb": 7.0,
+        "iron": 0.25,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "Well-A",
+      "ts": null,
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "id": 33,
+        "ts": null,
+        "ph": 6.8,
+        "tds": 510.0,
+        "turb": 4.0,
+        "iron": 0.2,
+        "site": "Well-A",
+        "lat": 26.726,
+        "lon": 75.89
+      }
+    },
+    {
+      "site": "indore",
+      "ts": "2025-10-10T08:18:00.000Z",
+      "reasons": [
+        "pH low (5.0 < 6.5)",
+        "Iron high (0.5 > 0.3)"
+      ],
+      "reading": {
+        "id": 42,
+        "ts": "2025-10-10T08:18:00.000Z",
+        "ph": 5.0,
+        "tds": 55.0,
+        "turb": 3.0,
+        "iron": 0.5,
+        "site": "indore",
+        "lat": null,
+        "lon": null
+      }
+    },
+    {
+      "site": "indore",
+      "ts": "2025-10-10T09:19:00.000Z",
+      "reasons": [
+        "pH low (5.0 < 6.5)",
+        "TDS high (777.0 > 500)",
+        "Turbidity high (8.0 > 5)",
+        "Iron high (0.5 > 0.3)"
+      ],
+      "reading": {
+        "id": 43,
+        "ts": "2025-10-10T09:19:00.000Z",
+        "ph": 5.0,
+        "tds": 777.0,
+        "turb": 8.0,
+        "iron": 0.5,
+        "site": "indore",
+        "lat": null,
+        "lon": null
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-09T21:29:30.652Z",
+        "2025-10-09T22:06:50.828Z",
+        "2025-10-09T22:07:02.615Z",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "2025-10-10T08:18:00.000Z",
+        "2025-10-10T09:19:00.000Z",
+        "2025-10-13T04:51:53.629Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            7.1,
+            7.1,
+            7.1,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            6.4,
+            7.0,
+            6.8,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            5.0,
+            5.0,
+            null
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            480.0,
+            480.0,
+            480.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            580.0,
+            450.0,
+            510.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            55.0,
+            777.0,
+            null
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            2.3,
+            2.3,
+            2.3,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            7.0,
+            3.1,
+            4.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            3.0,
+            8.0,
+            null
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.05,
+            0.05,
+            0.05,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            0.25,
+            0.12,
+            0.2,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.5,
+            0.5,
+            null
+          ]
+        }
+      ]
+    }
+  ],
+  "from_db_rows": 44
+}
+
+
+--- REQUEST 2025-10-30T20:12:50.667425Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:12:50.670956Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:00.698821Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:00.700531Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:03.691013Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:03.692310Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:03.891955Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:03.894435Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:04.102782Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:04.103951Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:04.301436Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:04.303068Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:04.477019Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:04.479073Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:04.639633Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:04.641776Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:04.816212Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:04.817624Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:04.996359Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:04.998319Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+--- REQUEST 2025-10-30T20:13:05.221889Z ---
+{
+  "rows": [
+    {
+      "ts": "2025-10-10T11:00:00Z",
+      "ph": 6.4,
+      "tds": 580,
+      "turb": 7,
+      "iron": 0.25,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T12:00:00Z",
+      "ph": 7,
+      "tds": 450,
+      "turb": 3.1,
+      "iron": 0.12,
+      "site": "site-1"
+    },
+    {
+      "ts": "2025-10-10T13:00:00Z",
+      "ph": 6.8,
+      "tds": 510,
+      "turb": 4,
+      "iron": 0.2,
+      "site": "site-1"
+    }
+  ]
+}
+
+
+--- RESPONSE 2025-10-30T20:13:05.223729Z ---
+{
+  "type": "local",
+  "generated_text": "Local WAM analysis summary:\n- PH: 3 readings, avg=6.73, min=6.4, max=7.0\n- TDS: 3 readings, avg=513, min=450.0, max=580.0\n- TURB: 3 readings, avg=4.7, min=3.1, max=7.0\n- IRON: 3 readings, avg=0.19, min=0.12, max=0.25\n\nAlerts detected: 2 readings breach thresholds:\n  \u2022 Site site-1 @ 2025-10-10T11:00:00Z: pH low (6.4 < 6.5); TDS high (580.0 > 500); Turbidity high (7.0 > 5)\n  \u2022 Site site-1 @ 2025-10-10T13:00:00Z: TDS high (510.0 > 500)\n\nSuggested actions (heuristic):\n - TDS high: consider RO or ion-exchange.\n\nNext steps: 1) Re-sample suspect sites. 2) Send failing samples to lab. 3) Inspect source/distribution if multiple sites affected.",
+  "stats": {
+    "ph": {
+      "count": 3,
+      "avg": 6.733333333333333,
+      "min": 6.4,
+      "max": 7.0
+    },
+    "tds": {
+      "count": 3,
+      "avg": 513.3333333333334,
+      "min": 450.0,
+      "max": 580.0
+    },
+    "turb": {
+      "count": 3,
+      "avg": 4.7,
+      "min": 3.1,
+      "max": 7.0
+    },
+    "iron": {
+      "count": 3,
+      "avg": 0.19000000000000003,
+      "min": 0.12,
+      "max": 0.25
+    }
+  },
+  "breaches": [
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T11:00:00Z",
+      "reasons": [
+        "pH low (6.4 < 6.5)",
+        "TDS high (580.0 > 500)",
+        "Turbidity high (7.0 > 5)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T11:00:00Z",
+        "ph": 6.4,
+        "tds": 580,
+        "turb": 7,
+        "iron": 0.25,
+        "site": "site-1"
+      }
+    },
+    {
+      "site": "site-1",
+      "ts": "2025-10-10T13:00:00Z",
+      "reasons": [
+        "TDS high (510.0 > 500)"
+      ],
+      "reading": {
+        "ts": "2025-10-10T13:00:00Z",
+        "ph": 6.8,
+        "tds": 510,
+        "turb": 4,
+        "iron": 0.2,
+        "site": "site-1"
+      }
+    }
+  ],
+  "charts": [
+    {
+      "id": "main",
+      "title": "Measured Trends",
+      "labels": [
+        "2025-10-10T11:00:00Z",
+        "2025-10-10T12:00:00Z",
+        "2025-10-10T13:00:00Z"
+      ],
+      "datasets": [
+        {
+          "label": "pH",
+          "data": [
+            6.4,
+            7.0,
+            6.8
+          ]
+        },
+        {
+          "label": "TDS",
+          "data": [
+            580.0,
+            450.0,
+            510.0
+          ]
+        },
+        {
+          "label": "Turb",
+          "data": [
+            7.0,
+            3.1,
+            4.0
+          ]
+        },
+        {
+          "label": "Iron",
+          "data": [
+            0.25,
+            0.12,
+            0.2
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -35,7 +35,8 @@ export default function AnalysisModal({ open, onClose, rows = [], mode: propMode
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model, inputs })
+        // include the selected rows so backend can run local analysis on them
+        body: JSON.stringify({ model, inputs, rows, mode, extraInstructions })
       });
       const json = await res.json();
       if (json.error) setError(json.error);

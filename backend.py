@@ -1,10 +1,6 @@
 ﻿#!/usr/bin/env python3
 """
-WAM backend (Flask) — full file (replacement)
-
-Notes:
- - Minor robustness for SSE and health route added.
- - Runs with threaded=True to help SSE during dev.
+WAM backend (Flask) — full file (updated analyze endpoint)
 """
 import os
 import json
@@ -16,12 +12,15 @@ import traceback
 from datetime import datetime
 from flask import Flask, request, jsonify, g, send_from_directory, Response, make_response
 from flask_cors import CORS
-import requests
-import traceback
 import logging
+import requests
+
+# basic logging for server-side debugging
+logging.basicConfig(level=logging.INFO)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DB_PATH = os.path.join(BASE_DIR, "data.db")
+ANALYZE_LOG = os.path.join(BASE_DIR, "analyze.log")
 COHERE_API_KEY = os.environ.get("COHERE_API_KEY", "").strip()
 
 app = Flask(__name__, static_folder="public", static_url_path="")
@@ -207,10 +206,6 @@ def api_sensor():
 
 @app.route("/api/upload", methods=["POST"])
 def api_upload():
-    """
-    Accepts multipart form upload with field 'file' (CSV).
-    Each CSV row columns can include ts,ph,tds,turb,iron,site,lat,lon
-    """
     if "file" not in request.files:
         return jsonify({"error":"no file"}), 400
     f = request.files["file"]
@@ -335,7 +330,7 @@ def api_report():
     writer = csv.writer(output)
     writer.writerow(["id","ts","ph","tds","turb","iron","site","lat","lon"])
     for r in rows:
-        writer.writerow([r["id"], r["ts"], r["ph"], r["tds"], r["turb"], r["iron"], r["site"], r["lon"] if "lon" in r else r.get("lon")])
+        writer.writerow([r["id"], r["ts"], r["ph"], r["tds"], r["turb"], r["iron"], r["site"], r["lat"], r["lon"]])
     resp = make_response(output.getvalue())
     resp.headers["Content-Type"] = "text/csv"
     resp.headers["Content-Disposition"] = "attachment; filename=wam_readings.csv"
@@ -358,10 +353,9 @@ def stream():
             pass
     q = queue.Queue()
     clients.append(q)
-    headers = {"Cache-Control": "no-cache"}
-    return Response(gen(q), mimetype="text/event-stream", headers=headers)
+    return Response(gen(q), mimetype="text/event-stream")
 
-# ---------- ANALYZE: local analysis + optional Cohere integration ----------
+# ---------- ANALYZE: local analysis + robust endpoint ----------
 def local_analysis(rows_list):
     def safe_float(x):
         try: return float(x)
@@ -462,55 +456,35 @@ def local_analysis(rows_list):
 
     return {"type":"local", "generated_text":"\n".join(lines), "stats": stats, "breaches": breaches, "charts": charts}
 
-import traceback
-import logging
-# (ensure logging configured at top of file if not already)
-logging.basicConfig(level=logging.INFO)
-
-ANALYZE_LOG = os.path.join(BASE_DIR, "analyze.log")
-
 @app.route("/api/analyze", methods=["POST"])
 def api_analyze():
-    """
-    Robust analyze endpoint:
-      - If payload.rows present -> local_analysis(rows)
-      - Else -> read last 200 readings from DB and run local_analysis
-      - Logs payload and response to analyze.log and to Flask app logger
-      - Always returns a predictable JSON with 'generated_text', 'stats', 'breaches', 'charts'
-    """
     try:
         payload = request.get_json(force=True) or {}
-    except Exception as e:
-        app.logger.exception("Invalid JSON in analyze request")
-        return jsonify({"error": "Invalid JSON", "detail": str(e)}), 400
+    except Exception:
+        return jsonify({"error":"Invalid JSON"}), 400
 
-    # Log incoming payload (trim long bodies)
+    # Write incoming payload into analyze.log for debugging
     try:
-        pl_short = json.dumps(payload)[:2000]
-        app.logger.info("[ANALYZE] payload: %s", pl_short)
         with open(ANALYZE_LOG, "a") as fh:
             fh.write(f"\n\n--- REQUEST {datetime.utcnow().isoformat()}Z ---\n")
-            fh.write(json.dumps(payload, indent=2) + "\n")
+            fh.write(json.dumps(payload, indent=2, default=str) + "\n")
     except Exception:
-        app.logger.exception("Failed to log analyze payload")
+        app.logger.exception("Failed to write analyze request to log")
 
     rows = payload.get("rows")
+    resp_json = {}
     try:
-        if rows:
-            # ensure it's a list
-            if not isinstance(rows, list):
-                raise ValueError("rows must be an array")
+        if rows and isinstance(rows, list):
             resp = local_analysis(rows)
             resp_json = resp if isinstance(resp, dict) else {"generated_text": str(resp)}
             resp_json["type"] = "local"
         else:
-            # No rows: fetch last N readings from DB and analyze locally
+            # fetch recent rows from DB
             db = get_db()
             cur = db.cursor()
             limit = int(payload.get("limit", 200))
             cur.execute("SELECT * FROM readings ORDER BY id DESC LIMIT ?", (limit,))
             rows_db = [dict(r) for r in cur.fetchall()]
-            # reverse to chronological order
             rows_db = list(reversed(rows_db))
             resp = local_analysis(rows_db)
             resp_json = resp if isinstance(resp, dict) else {"generated_text": str(resp)}
@@ -519,65 +493,29 @@ def api_analyze():
     except Exception as e:
         app.logger.exception("Local analysis failed")
         resp_json = {"error": "Local analysis failed", "detail": str(e)}
-        # log to file
         with open(ANALYZE_LOG, "a") as fh:
             fh.write(f"\n\n--- ANALYSIS ERROR {datetime.utcnow().isoformat()}Z ---\n")
             fh.write(traceback.format_exc() + "\n")
         return jsonify(resp_json), 500
 
-    # Ensure generated_text present and charts exist
+    # Ensure generated_text exists
     if "generated_text" not in resp_json:
-        # create a safe textual summary fallback
         try:
-            summary = resp_json.get("stats") and json.dumps(resp_json.get("stats"), default=str, indent=2)
+            resp_json["generated_text"] = json.dumps(resp_json.get("stats", {}), default=str, indent=2)
         except Exception:
-            summary = str(resp_json)
-        resp_json["generated_text"] = resp_json.get("generated_text", summary or "Local analysis completed.")
-    # Log the response (trim)
+            resp_json["generated_text"] = "Local analysis completed."
+
+    # Log response
     try:
         with open(ANALYZE_LOG, "a") as fh:
             fh.write(f"\n\n--- RESPONSE {datetime.utcnow().isoformat()}Z ---\n")
-            fh.write(json.dumps(resp_json, indent=2) + "\n")
-        app.logger.info("[ANALYZE] response preview: %s", json.dumps(resp_json)[:2000])
+            fh.write(json.dumps(resp_json, indent=2, default=str) + "\n")
+        app.logger.info("[ANALYZE] response written to analyze.log")
     except Exception:
-        app.logger.exception("Failed to write analyze log")
+        app.logger.exception("Failed to write analyze response to log")
 
     return jsonify(resp_json)
 
-    # No rows -> attempt to call Cohere (if key present), else return helpful error
-    if not COHERE_API_KEY:
-        return jsonify({"error":"No COHERE_API_KEY set on server. Send 'rows' for local analysis or set COHERE_API_KEY env var."}), 400
-
-    prompt_text = inputs or "Analyze these water quality readings and suggest summary and treatment options."
-    url = "https://api.cohere.ai/generate"
-    headers = {"Authorization": f"Bearer {COHERE_API_KEY}", "Content-Type":"application/json"}
-    data = {
-        "model": "command-xlarge-nightly",
-        "prompt": prompt_text,
-        "max_tokens": 300,
-        "temperature": 0.2,
-        "k": 0,
-        "return_likelihoods": "NONE"
-    }
-    try:
-        r = requests.post(url, headers=headers, json=data, timeout=30)
-        app.logger.info(f"[COHERE] status={r.status_code} resp_preview={r.text[:500]!r}")
-        if r.status_code == 401:
-            return jsonify({"error":"Cohere 401 Unauthorized: invalid API key."}), 401
-        if r.status_code == 403:
-            return jsonify({"error":"Cohere 403 Forbidden: model access denied."}), 403
-        r.raise_for_status()
-        jr = r.json()
-        if isinstance(jr, dict) and "generations" in jr:
-            text = "\n\n".join(g.get("text","") for g in jr["generations"])
-            return jsonify({"type":"cohere", "generated_text": text, "raw": jr})
-        return jsonify({"type":"cohere", "generated": jr})
-    except requests.exceptions.HTTPError as e:
-        app.logger.error("[COHERE] HTTP error: %s", e)
-        return jsonify({"error":"Cohere HTTP error", "detail": str(e)}), 500
-    except Exception as e:
-        app.logger.exception("[COHERE] request failed")
-        return jsonify({"error":"Cohere request failed", "detail": str(e)}), 500
 
 # static serving
 @app.route("/", defaults={"path": ""})
@@ -593,14 +531,10 @@ def serve(path):
         return send_from_directory(BASE_DIR, "index.html")
     return "Index not found. Place index.html in public/ or project root.", 404
 
-@app.route("/health")
-def health():
-    return jsonify({"ok": True, "time": datetime.utcnow().isoformat() + "Z"})
-
 # initialize DB
 with app.app_context():
     init_db()
 
 if __name__ == "__main__":
     print("Starting backend on http://0.0.0.0:5001")
-    app.run(host="0.0.0.0", port=5001, debug=False, use_reloader=False, threaded=True)
+    app.run(host="0.0.0.0", port=5001, debug=False, use_reloader=False)
